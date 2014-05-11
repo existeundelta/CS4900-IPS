@@ -41,6 +41,7 @@ import org.redpin.android.ui.list.SearchListActivity;
 import org.redpin.android.ui.mapview.MapView;
 import org.redpin.android.util.ExceptionReporter;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -58,6 +59,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -89,6 +91,10 @@ public class MapViewActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		ActionBar actionBar = getActionBar();
+		actionBar.show();
+		
 		ApplicationContext.init(getApplicationContext());
 		ExceptionReporter.register(this);
 
@@ -453,6 +459,10 @@ public class MapViewActivity extends Activity {
 	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		  MenuInflater inflater = getMenuInflater();
+		    inflater.inflate(R.menu.options_menu, menu);
+		    return true;
+		/**
 		super.onCreateOptionsMenu(menu);
 		menu.add(0, R.id.options_menu_search, 0,
 				R.string.options_menu_search_text).setIcon(
@@ -464,6 +474,7 @@ public class MapViewActivity extends Activity {
 				R.string.options_menu_add_map_text).setIcon(
 				R.drawable.menu_addmap_black);
 		return true;
+	**/
 	}
 
 	/**
