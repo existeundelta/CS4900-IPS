@@ -1,2 +1,2 @@
 -Webserver code implemented through c.
--Implement a self menu button to print out list on android (tablet DESIGN issues)
+-Implement a self menu button to print out list on android (tablet DESIGN issues)  - Done (Yap)
