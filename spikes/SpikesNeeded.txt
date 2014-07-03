@@ -1,2 +1,11 @@
+To Do:-
+
 -Webserver code implemented through c.
+-Set a doxygen process for this project documentation purposes. 
+-Design a new database to store fingerprints.
+
+=====================================================================================================
+
+Done :-
+
 -Implement a self menu button to print out list on android (tablet DESIGN issues)  - Done (Yap)
