@@ -1,3 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">&#x0A;<refactoring comment="Delete 5 resources" deleteContents="false" description="Delete 5 resources" element1="/RedpinAndroid" element2="/RedpinAndroidTest" element3="/RedpinCore" element4="/RedpinServer" element5="/RedpinServerTest" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="5" stamp="1397670412136"/>&#x0A;<refactoring comment="Delete resource &apos;RedpinAndroid&apos;" deleteContents="false" description="Delete resource &apos;RedpinAndroid&apos;" element1="/RedpinAndroid" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1397670438959"/>
-</session>
