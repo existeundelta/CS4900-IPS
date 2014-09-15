@@ -116,10 +116,7 @@ public class MapHome extends EntityHome<Map> {
 		String sql_m = " DELETE FROM " + HomeFactory.getMeasurementHome().getTableName() + " WHERE " + measurementsCnst;
 		String sql_wifi = " DELETE FROM " + HomeFactory.getWiFiReadingHome().getTableName() + 
 						  " WHERE " + HomeFactory.getWiFiReadingHome().getTableIdCol() + readingInMeasurementCnst;
-		String sql_gsm = " DELETE FROM " + HomeFactory.getGSMReadingHome().getTableName() + 
-		  				 " WHERE " + HomeFactory.getGSMReadingHome().getTableIdCol() + readingInMeasurementCnst;
-		String sql_bluetooth = " DELETE FROM " + HomeFactory.getBluetoothReadingHome().getTableName() + 
-		  					   " WHERE " + HomeFactory.getBluetoothReadingHome().getTableIdCol() + readingInMeasurementCnst;
+		
 		 
 		String sql_rinm = "DELETE FROM readinginmeasurement WHERE " + measurementsCnst;
 		String sql_fp = "DELETE FROM " + HomeFactory.getFingerprintHome().getTableName() + " WHERE " + locationCnst;
@@ -129,8 +126,7 @@ public class MapHome extends EntityHome<Map> {
 		Statement stat = null;
 		
 		log.finest(sql_wifi);
-		log.finest(sql_gsm);
-		log.finest(sql_bluetooth);
+	
 		log.finest(sql_rinm);
 		log.finest(sql_m);
 		log.finest(sql_fp);
@@ -142,8 +138,7 @@ public class MapHome extends EntityHome<Map> {
 			stat = db.getConnection().createStatement();
 			if (db.getConnection().getMetaData().supportsBatchUpdates()) {
 				stat.addBatch(sql_wifi);
-				stat.addBatch(sql_gsm);
-				stat.addBatch(sql_bluetooth);
+			
 				stat.addBatch(sql_rinm);
 				stat.addBatch(sql_fp);
 				stat.addBatch(sql_m);
@@ -155,8 +150,7 @@ public class MapHome extends EntityHome<Map> {
 				}
 			} else {
 				stat.executeUpdate(sql_wifi);
-				stat.executeUpdate(sql_gsm);
-				stat.executeUpdate(sql_bluetooth);
+	
 				stat.executeUpdate(sql_rinm);
 				stat.executeUpdate(sql_fp);
 				stat.executeUpdate(sql_m);

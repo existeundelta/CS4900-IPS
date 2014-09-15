@@ -206,10 +206,7 @@ public class RequestHandlerTest extends InstrumentationTestCase {
 			assertEquals(wi1.getSsid(), wi2.getSsid());
 		}
 
-		assertEquals(m1.getBluetoothReadings().size(), m2
-				.getBluetoothReadings().size());
-		assertEquals(m2.getGsmReadings().size(), m2.getGsmReadings().size());
-
+		
 		Request<Map> mmrequest = new Request<Map>(RequestType.removeMap, map);
 		Response<Void> mmresponse = (Response<Void>) RequestHandler
 				.performRequest(mmrequest);

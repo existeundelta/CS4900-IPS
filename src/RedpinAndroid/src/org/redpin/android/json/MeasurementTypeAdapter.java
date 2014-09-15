@@ -26,8 +26,6 @@ import java.util.Collection;
 
 import org.redpin.android.core.Measurement;
 import org.redpin.android.core.Vector;
-import org.redpin.android.core.measure.BluetoothReading;
-import org.redpin.android.core.measure.GSMReading;
 import org.redpin.android.core.measure.WiFiReading;
 
 import com.google.gson.JsonDeserializationContext;
@@ -59,12 +57,11 @@ public class MeasurementTypeAdapter implements JsonDeserializer<Measurement> {
 		JsonElement json_timestamp = obj.get("timestamp");
 		JsonElement json_wifi = obj.get("wifiReadings");
 		JsonElement json_gsm = obj.get("gsmReadings");
-		JsonElement json_bluetooth = obj.get("bluetoothReadings");
 
 		// init vectors
 		Vector<WiFiReading> wifi = new Vector<WiFiReading>();
-		Vector<GSMReading> gsm = new Vector<GSMReading>();
-		Vector<BluetoothReading> bluetooth = new Vector<BluetoothReading>();
+	
+		
 
 		// deserialize reading vectors
 		Type listType;
@@ -76,23 +73,9 @@ public class MeasurementTypeAdapter implements JsonDeserializer<Measurement> {
 			wifi.addAll(wificol);
 		}
 
-		if (json_gsm != null) {
-			listType = new TypeToken<Vector<GSMReading>>() {
-			}.getType();
-			Collection<GSMReading> gsmcol = context.deserialize(json_gsm,
-					listType);
-			gsm.addAll(gsmcol);
-		}
-
-		if (json_bluetooth != null) {
-			listType = new TypeToken<Vector<BluetoothReading>>() {
-			}.getType();
-			Collection<BluetoothReading> bluetoothcol = context.deserialize(
-					json_bluetooth, listType);
-			bluetooth.addAll(bluetoothcol);
-		}
+		
 		// create deserialized measurement
-		Measurement m = new Measurement(gsm, wifi, bluetooth);
+		Measurement m = new Measurement(wifi);
 		if (json_timestamp != null) {
 			m.setTimestamp((Long) context.deserialize(json_timestamp,
 					Long.class));

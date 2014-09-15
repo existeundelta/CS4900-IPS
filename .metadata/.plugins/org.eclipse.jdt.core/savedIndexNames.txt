@@ -1,5 +1,0 @@
-INDEX VERSION 1.126+C:\Users\KelvinYap\Documents\GitHub\CS4900-IPS\.metadata\.plugins\org.eclipse.jdt.core
-142299921.index
-3874099150.index
-164981225.index
-1109762704.index

@@ -15,19 +15,14 @@ import org.redpin.server.standalone.core.Location;
 import org.redpin.server.standalone.core.Map;
 import org.redpin.server.standalone.core.Measurement;
 import org.redpin.server.standalone.core.Vector;
-import org.redpin.server.standalone.core.measure.BluetoothReading;
-import org.redpin.server.standalone.core.measure.GSMReading;
+
 import org.redpin.server.standalone.core.measure.WiFiReading;
 import org.redpin.server.standalone.db.HomeFactory;
-import org.redpin.server.standalone.db.homes.BluetoothReadingHome;
 import org.redpin.server.standalone.db.homes.FingerprintHome;
-import org.redpin.server.standalone.db.homes.GSMReadingHome;
 import org.redpin.server.standalone.db.homes.LocationHome;
 import org.redpin.server.standalone.db.homes.MapHome;
 import org.redpin.server.standalone.db.homes.MeasurementHome;
 import org.redpin.server.standalone.db.homes.WiFiReadingHome;
-import org.redpin.server.standalone.db.homes.vector.BluetoothReadingVectorHome;
-import org.redpin.server.standalone.db.homes.vector.GSMReadingVectorHome;
 import org.redpin.server.standalone.db.homes.vector.WiFiReadingVectorHome;
 
 public class DatabaseTest extends TestCase {
@@ -45,19 +40,12 @@ public class DatabaseTest extends TestCase {
 	WiFiReadingVectorHome wrvh;
 	
 	
-	BluetoothReading breading, breading2;
-	Vector<BluetoothReading> vectorBlue;
-	BluetoothReadingVectorHome brvh;
-	
-	GSMReading greading;
-	Vector<GSMReading> vectorGSM;
-	GSMReadingVectorHome grvh;
+
 	
 	Measurement measurement;
 	MeasurementHome measurementHome;
 	private FingerprintHome fph;
-	private BluetoothReadingHome brh;
-	private GSMReadingHome grh;
+	
 	
 	
 	
@@ -143,48 +131,17 @@ public class DatabaseTest extends TestCase {
 		vectorWifi.add(wfreading2);
 		vectorWifi.add(wfreading3);
 		
-		
-		
-		breading = new BluetoothReading();
-		breading.setBluetoothAddress("bluetooth adress");
-		breading.setFriendlyName("friendly name");
-		breading.setMajorDeviceClass("Major");
-		breading.setMinorDeviceClass("minor");
-		
-		breading2 = new BluetoothReading();
-		breading2.setBluetoothAddress("bluetooth adress 2");
-		breading2.setFriendlyName("friendly name 2");
-		breading2.setMajorDeviceClass("Major 2");
-		breading2.setMinorDeviceClass("minor 2");
-		
-		vectorBlue = new Vector<BluetoothReading>();
-		vectorBlue.add(breading);
-		vectorBlue.add(breading2);
-		
-		greading = new GSMReading();
-		greading.setAreaId("Area ID");
-		greading.setCellId("Cell ID");
-		greading.setMCC("MCC");
-		greading.setMNC("MNC");
-		greading.setNetworkName("Network Name");
-		greading.setSignalStrength("Singal Strengh");
-		
-		vectorGSM = new Vector<GSMReading>();
-		vectorGSM.add(greading);
+
+
 		
 		measurement = new Measurement();
 		measurement.setWiFiReadings(vectorWifi);
-		measurement.setBluetoothReadings(vectorBlue);
-		measurement.setGSMReadings(vectorGSM);
-		
+
 		mh = HomeFactory.getMapHome();
 		lh = HomeFactory.getLocationHome();
 		wrh = HomeFactory.getWiFiReadingHome();
 		wrvh = HomeFactory.getWiFiReadingVectorHome();
-		brh = HomeFactory.getBluetoothReadingHome();
-		brvh = HomeFactory.getBluetoothReadingVectorHome();
-		grh = HomeFactory.getGSMReadingHome();
-		grvh = HomeFactory.getGSMReadingVectorHome();	
+	
 		measurementHome = HomeFactory.getMeasurementHome();
 		fph = HomeFactory.getFingerprintHome();
 		
@@ -563,11 +520,7 @@ public class DatabaseTest extends TestCase {
 			assertNotNull(msg,m.getWiFiReadings());
 			assertEquals(msg,3, m.getWiFiReadings().size());
 			
-			assertNotNull(msg,m.getBluetoothReadings());
-			assertEquals(msg,0, m.getBluetoothReadings().size());
-			
-			assertNotNull(msg, m.getGsmReadings());
-			assertEquals(msg,0, m.getGsmReadings().size());
+		
 		}
 		
 		
@@ -609,11 +562,7 @@ public class DatabaseTest extends TestCase {
 			assertNotNull(msg,m.getWiFiReadings());
 			assertEquals(msg,3, m.getWiFiReadings().size());
 			
-			assertNotNull(msg,m.getBluetoothReadings());
-			assertEquals(msg,2, m.getBluetoothReadings().size());
-			
-			assertNotNull(msg, m.getGsmReadings());
-			assertEquals(msg,1, m.getGsmReadings().size());
+		
 			
 		}
 		
@@ -645,13 +594,10 @@ public class DatabaseTest extends TestCase {
 		assertNotNull(ws);
 		assertEquals(3, ws.size());
 		
-		List<BluetoothReading> bs = brh.getAll();
-		assertNotNull(bs);
-		assertEquals(2, bs.size());
+
+	
 		
-		List<GSMReading> gs = grh.getAll();
-		assertNotNull(gs);
-		assertEquals(1, gs.size());
+
 	}
 	
 	@Test
@@ -674,14 +620,8 @@ public class DatabaseTest extends TestCase {
 		List<WiFiReading> ws = wrh.getAll();
 		assertNotNull(ws);
 		assertEquals(0, ws.size());
-		
-		List<BluetoothReading> bs = brh.getAll();
-		assertNotNull(bs);
-		assertEquals(0, bs.size());
-		
-		List<GSMReading> gs = grh.getAll();
-		assertNotNull(gs);
-		assertEquals(0, gs.size());
+
+
 	}
 	
 	@Test

@@ -52,8 +52,7 @@ public class FingerprintHome extends EntityHome<Fingerprint> {
 	private static final String TableIdCol = "fingerprintId";
 	private static final String selectFingerprints = " SELECT " + TableName + "." + TableIdCol + ", " + HomeFactory.getLocationHome().getTableColNames() + ", " +
 	 												 HomeFactory.getMapHome().getTableColNames() + ", " + HomeFactory.getMeasurementHome().getTableColNames() + ", " +
-	 												 " readinginmeasurement.readingClassName, " + HomeFactory.getWiFiReadingHome().getTableColNames() + ", " + 
-	 												 HomeFactory.getGSMReadingHome().getTableColNames() + ", " + HomeFactory.getBluetoothReadingHome().getTableColNames()  +
+	 												 " readinginmeasurement.readingClassName, " + HomeFactory.getWiFiReadingHome().getTableColNames() + ", " +
 	 												 " FROM " + TableName + " INNER JOIN location ON fingerprint.locationId = location.locationId " +
 	 												 " INNER JOIN map ON location.mapId = map.mapId INNER JOIN measurement ON fingerprint.measurementId = measurement.measurementId " + 
 	 												 " LEFT OUTER JOIN readinginmeasurement ON readinginmeasurement.measurementId = measurement.measurementId " +
@@ -302,9 +301,7 @@ public class FingerprintHome extends EntityHome<Fingerprint> {
 			// wifi
 			HomeFactory.getWiFiReadingVectorHome().executeUpdate(vps, m.getWiFiReadings(), measurementId);
 			// gsm
-			HomeFactory.getGSMReadingVectorHome().executeUpdate(vps, m.getGsmReadings(), measurementId);			
 			// bluetooth
-			HomeFactory.getBluetoothReadingVectorHome().executeUpdate(vps, m.getBluetoothReadings(), measurementId);
 			
 			Location l = (Location)fprint.getLocation();
 			int locationId = l.getId() == null ? -1 : l.getId().intValue();
@@ -401,10 +398,7 @@ public class FingerprintHome extends EntityHome<Fingerprint> {
 		String sql_m = " DELETE FROM " + HomeFactory.getMeasurementHome().getTableName() + " WHERE " + measurementsCnst;
 		String sql_wifi = " DELETE FROM " + HomeFactory.getWiFiReadingHome().getTableName() + 
 						  " WHERE " + HomeFactory.getWiFiReadingHome().getTableIdCol() + readingInMeasurementCnst;
-		String sql_gsm = " DELETE FROM " + HomeFactory.getGSMReadingHome().getTableName() + 
-		  				 " WHERE " + HomeFactory.getGSMReadingHome().getTableIdCol() + readingInMeasurementCnst;
-		String sql_bluetooth = " DELETE FROM " + HomeFactory.getBluetoothReadingHome().getTableName() + 
-		  					   " WHERE " + HomeFactory.getBluetoothReadingHome().getTableIdCol() + readingInMeasurementCnst;
+	
 		 
 		String sql_rinm = "DELETE FROM readinginmeasurement WHERE " + measurementsCnst;
 		String sql_fp = "DELETE FROM " + HomeFactory.getFingerprintHome().getTableName() + " WHERE " + fingerprintsCnst;
@@ -412,8 +406,7 @@ public class FingerprintHome extends EntityHome<Fingerprint> {
 		Statement stat = null;
 		
 		log.finest(sql_wifi);
-		log.finest(sql_gsm);
-		log.finest(sql_bluetooth);
+	
 		log.finest(sql_rinm);
 		log.finest(sql_m);
 		log.finest(sql_fp);
@@ -424,8 +417,7 @@ public class FingerprintHome extends EntityHome<Fingerprint> {
 			if (db.getConnection().getMetaData().supportsBatchUpdates()) {
 				
 				stat.addBatch(sql_wifi);
-				stat.addBatch(sql_gsm);
-				stat.addBatch(sql_bluetooth);
+		
 				stat.addBatch(sql_rinm);
 				stat.addBatch(sql_fp);
 				stat.addBatch(sql_m);
@@ -435,8 +427,7 @@ public class FingerprintHome extends EntityHome<Fingerprint> {
 				}
 			} else {
 				stat.executeUpdate(sql_wifi);
-				stat.executeUpdate(sql_gsm);
-				stat.executeUpdate(sql_bluetooth);
+	
 				stat.executeUpdate(sql_rinm);
 				res = stat.executeUpdate(sql_fp);
 				stat.executeUpdate(sql_m);
