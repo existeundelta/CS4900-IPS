@@ -21,6 +21,8 @@
  */
 package org.redpin.android.core;
 
+import org.redpin.android.core.measure.BluetoothReading;
+import org.redpin.android.core.measure.GSMReading;
 import org.redpin.android.core.measure.WiFiReading;
 import org.redpin.android.db.RemoteEntity;
 
@@ -33,15 +35,15 @@ public class Measurement extends org.redpin.base.core.Measurement implements
 		RemoteEntity<Integer> {
 
 	public Measurement() {
-	super(new Vector<WiFiReading>());	
-	
-	//	super(new Vector<WiFiReading>());
+		super(new Vector<GSMReading>(), new Vector<WiFiReading>(),
+				new Vector<BluetoothReading>());
 
 	}
 
-	public Measurement(
-			Vector<WiFiReading> wifiReadings) {
-		//super(wifiReadings);
+	public Measurement(Vector<GSMReading> gsmReadings,
+			Vector<WiFiReading> wifiReadings,
+			Vector<BluetoothReading> bluetoothReadings) {
+		super(gsmReadings, wifiReadings, bluetoothReadings);
 	}
 
 	protected Integer id;
@@ -54,8 +56,23 @@ public class Measurement extends org.redpin.base.core.Measurement implements
 		this.id = id;
 	}
 
-	
+	/**
+	 * @return Bluetooth readings vector
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public Vector<BluetoothReading> getBluetoothReadings() {
+		return (Vector<BluetoothReading>) super.getBluetoothReadings();
+	}
 
+	/**
+	 * @return GSM readings vector
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public Vector<GSMReading> getGsmReadings() {
+		return (Vector<GSMReading>) super.getGsmReadings();
+	}
 
 	/**
 	 * @return WiFi readings vector
@@ -71,7 +88,9 @@ public class Measurement extends org.redpin.base.core.Measurement implements
 	 * @param br
 	 *            Bluetooth readings vector
 	 */
-
+	public void setBluetoothReadings(Vector<BluetoothReading> br) {
+		bluetoothReadings = br;
+	}
 
 	/**
 	 * 
@@ -82,6 +101,14 @@ public class Measurement extends org.redpin.base.core.Measurement implements
 		wifiReadings = wr;
 	}
 
+	/**
+	 * 
+	 * @param gr
+	 *            GSMreadings vector
+	 */
+	public void setGSMReadings(Vector<GSMReading> gr) {
+		gsmReadings = gr;
+	}
 
 	@Override
 	public boolean equals(Object obj) {

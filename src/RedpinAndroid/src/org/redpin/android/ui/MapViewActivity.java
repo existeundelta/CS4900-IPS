@@ -27,7 +27,8 @@ import org.redpin.android.core.Fingerprint;
 import org.redpin.android.core.Location;
 import org.redpin.android.core.Map;
 import org.redpin.android.core.Measurement;
-
+import org.redpin.android.core.Vector;
+import org.redpin.android.core.measure.WiFiReading;
 import org.redpin.android.net.InternetConnectionManager;
 import org.redpin.android.net.Response;
 import org.redpin.android.net.SynchronizationManager;

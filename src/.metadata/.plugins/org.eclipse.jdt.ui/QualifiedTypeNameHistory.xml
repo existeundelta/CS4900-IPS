@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="org.redpin.android.core.Vector"/>
-<fullyQualifiedTypeName name="org.redpin.android.core.measure.WiFiReading"/>
+<fullyQualifiedTypeName name="android.view.MenuInflater"/>
+<fullyQualifiedTypeName name="org.redpin.android.R.layout"/>
+<fullyQualifiedTypeName name="android.app.ActionBar"/>
 </qualifiedTypeNameHistroy>

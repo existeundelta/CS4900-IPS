@@ -21,14 +21,17 @@
  */
 package org.redpin.server.standalone.db;
 
+import org.redpin.server.standalone.db.homes.BluetoothReadingHome;
 import org.redpin.server.standalone.db.homes.EntityHome;
 import org.redpin.server.standalone.db.homes.FingerprintHome;
+import org.redpin.server.standalone.db.homes.GSMReadingHome;
 import org.redpin.server.standalone.db.homes.LocationHome;
 import org.redpin.server.standalone.db.homes.MapHome;
 import org.redpin.server.standalone.db.homes.MeasurementHome;
 import org.redpin.server.standalone.db.homes.ReadingInMeasurementHome;
 import org.redpin.server.standalone.db.homes.WiFiReadingHome;
-
+import org.redpin.server.standalone.db.homes.vector.BluetoothReadingVectorHome;
+import org.redpin.server.standalone.db.homes.vector.GSMReadingVectorHome;
 import org.redpin.server.standalone.db.homes.vector.WiFiReadingVectorHome;
 
 /**
@@ -96,9 +99,35 @@ public class HomeFactory {
 		return wrvHome;
 	}
 	
-
+	private static GSMReadingHome grHome = null;
+	public synchronized static GSMReadingHome getGSMReadingHome() {
+		if(grHome == null) {
+			grHome = new GSMReadingHome();
+		}		
+		return grHome;
+	}
 	
-
-
-
+	private static GSMReadingVectorHome grvHome = null;
+	public synchronized static GSMReadingVectorHome getGSMReadingVectorHome() {
+		if(grvHome == null) {
+			grvHome = new GSMReadingVectorHome();
+		}		
+		return grvHome;
+	}
+	
+	private static BluetoothReadingHome brHome = null;
+	public synchronized static BluetoothReadingHome getBluetoothReadingHome() {
+		if(brHome == null) {
+			brHome = new BluetoothReadingHome();
+		}		
+		return brHome;
+	}
+	
+	private static BluetoothReadingVectorHome brvHome = null;
+	public synchronized static BluetoothReadingVectorHome getBluetoothReadingVectorHome() {
+		if(brvHome == null) {
+			brvHome = new BluetoothReadingVectorHome();
+		}		
+		return brvHome;
+	}
 }

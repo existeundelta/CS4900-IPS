@@ -40,7 +40,8 @@ public class MeasurementHome extends EntityHome<Measurement> {
 	private static final String TableName = "measurement"; 
 	private static final String TableIdCol = "measurementId";
 	private static final String selectMeasurements = " SELECT " + HomeFactory.getMeasurementHome().getTableColNames() + ", " +
-					 								 " readinginmeasurement.readingClassName, " + HomeFactory.getWiFiReadingHome().getTableColNames() + ", " +
+					 								 " readinginmeasurement.readingClassName, " + HomeFactory.getWiFiReadingHome().getTableColNames() + ", " + 
+					 								 HomeFactory.getGSMReadingHome().getTableColNames() + ", " + HomeFactory.getBluetoothReadingHome().getTableColNames()  +
 					 								 " FROM measurement INNER JOIN readinginmeasurement ON readinginmeasurement.measurementId = measurement.measurementId " +
 					 								 " LEFT OUTER JOIN wifireading ON wifireading.wifiReadingId = readinginmeasurement.readingId " +
 					 								 " LEFT OUTER JOIN gsmreading ON gsmreading.gsmReadingId = readinginmeasurement.readingId " +
@@ -95,8 +96,11 @@ public class MeasurementHome extends EntityHome<Measurement> {
 						readingClassName = rs.getString(fromIndex + 2);
 						if (HomeFactory.getWiFiReadingVectorHome().getContainedObjectClassName().equals(readingClassName)) {
 							m.setWiFiReadings(HomeFactory.getWiFiReadingVectorHome().parseResultRow(rs, fromIndex + 3));
-						} 	
-						else {
+						} else if (HomeFactory.getGSMReadingVectorHome().getContainedObjectClassName().equals(readingClassName)) {
+							m.setGSMReadings(HomeFactory.getGSMReadingVectorHome().parseResultRow(rs, fromIndex + 3 + HomeFactory.getWiFiReadingHome().getTableCols().length + 1));
+						} else if (HomeFactory.getBluetoothReadingVectorHome().getContainedObjectClassName().equals(readingClassName)) {
+							m.setBluetoothReadings(HomeFactory.getBluetoothReadingVectorHome().parseResultRow(rs, fromIndex + 3 + HomeFactory.getGSMReadingHome().getTableCols().length + 1 + HomeFactory.getWiFiReadingHome().getTableCols().length + 1));
+						} else {
 							log.fine("Result row has no matching readingClassName " + readingClassName);
 							rs.next();
 						}
@@ -147,6 +151,10 @@ public class MeasurementHome extends EntityHome<Measurement> {
 			int measurementId = HomeFactory.getMeasurementHome().executeInsertUpdate(vps, m);
 			// wifi
 			HomeFactory.getWiFiReadingVectorHome().executeUpdate(vps, m.getWiFiReadings(), measurementId);
+			// gsm
+			HomeFactory.getGSMReadingVectorHome().executeUpdate(vps, m.getGsmReadings(), measurementId);			
+			// bluetooth
+			HomeFactory.getBluetoothReadingVectorHome().executeUpdate(vps, m.getBluetoothReadings(), measurementId);
 		
 			
 			
@@ -196,14 +204,18 @@ public class MeasurementHome extends EntityHome<Measurement> {
 		String sql_m = " DELETE FROM " + HomeFactory.getMeasurementHome().getTableName() + " WHERE " + measurementsCnst;
 		String sql_wifi = " DELETE FROM " + HomeFactory.getWiFiReadingHome().getTableName() + 
 						  " WHERE " + HomeFactory.getWiFiReadingHome().getTableIdCol() + readingInMeasurementCnst;
-		
+		String sql_gsm = " DELETE FROM " + HomeFactory.getGSMReadingHome().getTableName() + 
+		  				 " WHERE " + HomeFactory.getGSMReadingHome().getTableIdCol() + readingInMeasurementCnst;
+		String sql_bluetooth = " DELETE FROM " + HomeFactory.getBluetoothReadingHome().getTableName() + 
+		  					   " WHERE " + HomeFactory.getBluetoothReadingHome().getTableIdCol() + readingInMeasurementCnst;
 		 
 		String sql_rinm = "DELETE FROM readinginmeasurement WHERE " + measurementsCnst;
 		
 		Statement stat = null;
 		
 		log.finest(sql_wifi);
-	
+		log.finest(sql_gsm);
+		log.finest(sql_bluetooth);
 		log.finest(sql_rinm);
 		log.finest(sql_m);
 
@@ -213,7 +225,8 @@ public class MeasurementHome extends EntityHome<Measurement> {
 			stat = db.getConnection().createStatement();
 			if (db.getConnection().getMetaData().supportsBatchUpdates()) {
 				stat.addBatch(sql_wifi);
-			
+				stat.addBatch(sql_gsm);
+				stat.addBatch(sql_bluetooth);
 				stat.addBatch(sql_rinm);
 				stat.addBatch(sql_m);
 				int results[] = stat.executeBatch();
@@ -222,7 +235,8 @@ public class MeasurementHome extends EntityHome<Measurement> {
 				}
 			} else {
 				stat.executeUpdate(sql_wifi);
-			
+				stat.executeUpdate(sql_gsm);
+				stat.executeUpdate(sql_bluetooth);
 				stat.executeUpdate(sql_rinm);
 				res = stat.executeUpdate(sql_m);
 			}

@@ -23,7 +23,8 @@ package org.redpin.base.core;
 
 import java.util.Vector;
 
-
+import org.redpin.base.core.measure.BluetoothReading;
+import org.redpin.base.core.measure.GSMReading;
 import org.redpin.base.core.measure.WiFiReading;
 
 /**
@@ -57,17 +58,17 @@ public abstract class Measurement {
 	/* constructor */
 	public Measurement() {
 		timestamp = System.currentTimeMillis();
-		
+		gsmReadings = new Vector();
 		wifiReadings = new Vector();
-		
+		bluetoothReadings = new Vector();
 		
 	}
 	
-	public Measurement(Vector wifiReadings) {
+	public Measurement(Vector gsmReadings, Vector wifiReadings, Vector bluetoothReadings) {
 		timestamp = System.currentTimeMillis();
-	
+		this.gsmReadings = gsmReadings;
 		this.wifiReadings = wifiReadings;
-		
+		this.bluetoothReadings = bluetoothReadings;
 	}
 
 
@@ -88,7 +89,16 @@ public abstract class Measurement {
 		this.timestamp = timestamp;
 	}
 
+	/**
+	 * @return the gsm readings
+	 */
+	public Vector getGsmReadings() {
+		return gsmReadings;
+	}
 
+	public void addGSMReading(GSMReading gsmReading) {
+		this.gsmReadings.addElement(gsmReading);
+	}
 
 	/**
 	 * @return the wifi readings
@@ -101,7 +111,15 @@ public abstract class Measurement {
 		this.wifiReadings.addElement(wiFiReading);
 	}
 
+	/**
+	 * @return the bluetooth readings
+	 */
+	public Vector getBluetoothReadings() {
+		return bluetoothReadings;
+	}
 
-
-
+	public void addBluetoothReading(BluetoothReading bluetoothReading) {
+		this.bluetoothReadings.addElement(bluetoothReading);
+	}
+	
 }
