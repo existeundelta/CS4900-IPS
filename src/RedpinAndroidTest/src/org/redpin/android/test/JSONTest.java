@@ -194,9 +194,7 @@ public class JSONTest extends InstrumentationTestCase {
 			assertEquals(wi1.getSsid(), wi2.getSsid());
 		}
 
-		assertEquals(m1.getBluetoothReadings().size(), m2
-				.getBluetoothReadings().size());
-		assertEquals(m2.getGsmReadings().size(), m2.getGsmReadings().size());
+		
 	}
 
 	public void test_gsonFingerprint() {
@@ -251,9 +249,6 @@ public class JSONTest extends InstrumentationTestCase {
 			assertEquals(wi1.getSsid(), wi2.getSsid());
 		}
 
-		assertEquals(m1.getBluetoothReadings().size(), m2
-				.getBluetoothReadings().size());
-		assertEquals(m2.getGsmReadings().size(), m2.getGsmReadings().size());
 
 	}
 

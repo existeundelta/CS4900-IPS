@@ -23,8 +23,7 @@ package org.redpin.server.standalone.core;
 
 import org.redpin.base.core.IMeasurement;
 
-import org.redpin.server.standalone.core.measure.BluetoothReading;
-import org.redpin.server.standalone.core.measure.GSMReading;
+
 import org.redpin.server.standalone.core.measure.WiFiReading;
 import org.redpin.server.standalone.db.IEntity;
 import org.redpin.server.standalone.locator.LocatorHome;
@@ -40,12 +39,12 @@ public class Measurement extends org.redpin.base.core.Measurement implements IMe
 	
 	
 	public Measurement() {
-		super(new Vector<GSMReading>(), new Vector<WiFiReading>(), new Vector<BluetoothReading>());
+		super( new Vector<WiFiReading>());
 		
 	}
 
-	public Measurement(Vector<GSMReading> gsmReadings, Vector<WiFiReading> wifiReadings, Vector<BluetoothReading> bluetoothReadings) {
-		super(gsmReadings, wifiReadings, bluetoothReadings);
+	public Measurement( Vector<WiFiReading> wifiReadings) {
+		super(wifiReadings);
 	}
 
 	private Integer id;
@@ -75,23 +74,7 @@ public class Measurement extends org.redpin.base.core.Measurement implements IMe
 	protected Vector<BluetoothReading> bluetoothReadings;
 	*/
 	
-	/**
-	 * @return Bluetooth readings vector
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public Vector<BluetoothReading> getBluetoothReadings() {
-		return (Vector<BluetoothReading>) super.getBluetoothReadings();
-	}
 
-	/**
-	 * @return GSM readings vector
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public Vector<GSMReading> getGsmReadings() {
-		return (Vector<GSMReading>) super.getGsmReadings();
-	}
 
 	/**
 	 * @return WiFi readings vector
@@ -102,14 +85,7 @@ public class Measurement extends org.redpin.base.core.Measurement implements IMe
 		return (Vector<WiFiReading>) super.getWiFiReadings();
 	}
 	
-	/**
-	 * 
-	 * @param br Bluetooth readings vector
-	 */
-	public void setBluetoothReadings(Vector<BluetoothReading> br) {
-		bluetoothReadings = br;
-	}
-	
+
 	/**
 	 * 
 	 * @param wr WiFi readings vector
@@ -118,13 +94,7 @@ public class Measurement extends org.redpin.base.core.Measurement implements IMe
 		wifiReadings = wr;
 	}
 	
-	/**
-	 * 
-	 * @param gr GSMreadings vector
-	 */
-	public void setGSMReadings(Vector<GSMReading> gr) {
-		gsmReadings = gr;
-	}
+
 
 	@Override
 	public boolean isSimilar(org.redpin.base.core.Measurement m) {
